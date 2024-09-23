@@ -24,7 +24,7 @@ cursor = connection.cursor()
 @bot.event
 async def on_ready():
     DiscordComponents(bot)
-    print ('Бип-буп..Захват сервера картошкой...буп-бип')
+    print ('..Внедрение на сервер бота-картошки...')
     await bot.change_presence (activity = discord.Activity (type = discord.ActivityType.watching, name = 'в пустоту, осозновая бессмысленность своего бытия...'))
      
     cursor.execute("""CREATE TABLE IF NOT EXISTS users(
@@ -63,7 +63,6 @@ async def on_member_join(member):
 
  #уровни:
 @bot.event
-#@event.guild_only()
 async def on_message(message):
     try:
         if message.author == bot.user:
@@ -90,8 +89,6 @@ async def on_message(message):
         print()
         print(tm)
         print(f"{message.author} написал боту в ЛС")
-    #print(message.guild.id)
-    #print()
     await bot.process_commands(message)
 
 
@@ -243,13 +240,11 @@ async def add_shop(ctx, role: discord.Role = None, cost: int = None):
             if ctx.guild.get_role(row[0]) != None:
                 if role == ctx.guild.get_role(row[0]):
                     flag = 1
-                    #print (flag)
         if flag == 0:
             cursor.execute("INSERT INTO shop VALUES({}, {}, {})".format(role.id, ctx.guild.id, cost))
             connection.commit()
             await ctx.message.add_reaction('👌')
         else:
-            #print (flag)
             await ctx.send(f"**{ctx.author}**, такая роль уже есть в магазине")
 
 
